@@ -1,0 +1,382 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="AzurChat.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#ECF3FA">
+
+    <Grid RowDefinitions="50,*,90">
+
+        <!-- ================= 顶部 ================= -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="White"
+            Padding="14,0"
+            ColumnDefinitions="40,*,40">
+
+            <!-- 菜单 -->
+            
+            
+            <Border
+                Grid.Column="0"
+                WidthRequest="36"
+                HeightRequest="36"
+                Stroke="#D9E1E8"
+                StrokeThickness="1"
+                BackgroundColor="White"
+                StrokeShape="RoundRectangle 18"
+                HorizontalOptions="Start"
+                VerticalOptions="Center">
+
+                <ImageButton
+                    x:Name="UserAvatarButton"
+                    Source="head.jpg"
+                    WidthRequest="32"
+                    HeightRequest="32"
+                    Padding="2"
+                    Aspect="AspectFit"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"
+                    Clicked="UserAvatarButton_Clicked"/>
+
+            </Border>
+
+
+
+            <!-- 标题 -->
+            <Label
+                Grid.Column="1"
+                Text="AzurChat"
+                FontSize="18"
+                TextColor="#202020"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+        </Grid>
+
+
+        <!-- ================= 主内容 ================= -->
+        <Grid
+            Grid.Row="1"
+            x:Name="MainContent">
+            
+            <!-- ================= 聊天 ================= -->
+            <Grid
+                x:Name="ChatContent"
+                IsVisible="True">
+
+                <ScrollView
+                    VerticalScrollBarVisibility="Default">
+
+                    <VerticalStackLayout
+                        x:Name="ChatListContainer"
+                        Padding="8,8,8,0"
+                        Spacing="4"/>
+
+                </ScrollView>
+
+            </Grid>
+
+            
+<!-- ================= 通讯录 ================= -->
+<Grid
+    x:Name="ContactContent"
+    IsVisible="False"
+    RowDefinitions="Auto,Auto,*"
+    RowSpacing="0">
+
+    <!-- 加好友：保留原有功能 -->
+    <Border
+        Grid.Row="0"
+        BackgroundColor="White"
+        StrokeThickness="0"
+        Margin="8,8,8,4"
+        Padding="15,12">
+
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10"/>
+        </Border.StrokeShape>
+
+        <Border.GestureRecognizers>
+            <TapGestureRecognizer Tapped="AddFriend_Tapped"/>
+        </Border.GestureRecognizers>
+
+        <HorizontalStackLayout Spacing="10">
+            <Image
+                Source="add.svg"
+                WidthRequest="26"
+                HeightRequest="26"
+                VerticalOptions="Center"/>
+
+            <Label
+                Text="加好友"
+                FontSize="16"
+                TextColor="#222222"
+                VerticalOptions="Center"/>
+        </HorizontalStackLayout>
+    </Border>
+
+    <!-- 横向菜单：靠左 -->
+    <Grid
+        Grid.Row="1"
+        ColumnDefinitions="Auto,Auto,*"
+        ColumnSpacing="28"
+        Padding="18,8,12,8"
+        BackgroundColor="#ECF3FA">
+
+        <VerticalStackLayout
+            Grid.Column="0"
+            Spacing="5"
+            HorizontalOptions="Start">
+
+            <Label
+                x:Name="GroupModeLabel"
+                Text="分组"
+                FontSize="16"
+                FontAttributes="Bold"
+                TextColor="#009FE3"/>
+
+            <BoxView
+                x:Name="GroupModeIndicator"
+                HeightRequest="3"
+                Color="#009FE3"
+                IsVisible="True"
+                CornerRadius="2"/>
+
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="GroupMode_Tapped"/>
+            </VerticalStackLayout.GestureRecognizers>
+        </VerticalStackLayout>
+
+        <VerticalStackLayout
+            Grid.Column="1"
+            Spacing="5"
+            HorizontalOptions="Start">
+
+            <Label
+                x:Name="FriendModeLabel"
+                Text="好友"
+                FontSize="16"
+                TextColor="#333333"/>
+
+            <BoxView
+                x:Name="FriendModeIndicator"
+                HeightRequest="3"
+                Color="Transparent"
+                IsVisible="False"
+                CornerRadius="2"/>
+
+            <VerticalStackLayout.GestureRecognizers>
+                <TapGestureRecognizer Tapped="FriendMode_Tapped"/>
+            </VerticalStackLayout.GestureRecognizers>
+        </VerticalStackLayout>
+    </Grid>
+
+    <!-- 分组和好友列表动态显示在这里 -->
+    <ScrollView
+        x:Name="ContactScroll"
+        Grid.Row="2"
+        VerticalScrollBarVisibility="Default">
+
+        <VerticalStackLayout
+            x:Name="ContactGroupsContainer"
+            Padding="8,4,8,12"
+            Spacing="4"/>
+    </ScrollView>
+
+</Grid>
+
+
+
+            
+
+            <!-- ================= 我的 ================= -->
+            <Grid
+                x:Name="MyContent"
+                IsVisible="False"
+                RowDefinitions="Auto,Auto,*"
+                RowSpacing="0">
+
+                <!-- 我的港区 -->
+                <Border
+                    Grid.Row="0"
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    Margin="8,8,8,4"
+                    Padding="15,12">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="AzurButton_Tapped"/>
+                    </Border.GestureRecognizers>
+
+                    <HorizontalStackLayout
+                        Spacing="10"
+                        VerticalOptions="Center">
+
+                        <Image
+                            Source="area.svg"
+                            WidthRequest="26"
+                            HeightRequest="26"
+                            VerticalOptions="Center"/>
+
+                        <Label
+                            Text="我的港区"
+                            FontSize="16"
+                            TextColor="#222222"
+                            VerticalOptions="Center"/>
+
+                    </HorizontalStackLayout>
+                </Border>
+
+                <!-- 设置 -->
+                <Border
+                    Grid.Row="1"
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    Margin="8,4,8,4"
+                    Padding="15,12">
+
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="SettingButton_Tapped"/>
+                    </Border.GestureRecognizers>
+
+                    <HorizontalStackLayout
+                        Spacing="10"
+                        VerticalOptions="Center">
+
+                        <Image
+                            Source="set.png"
+                            WidthRequest="26"
+                            HeightRequest="26"
+                            VerticalOptions="Center"/>
+
+                        <Label
+                            Text="设置"
+                            FontSize="16"
+                            TextColor="#222222"
+                            VerticalOptions="Center"/>
+
+                    </HorizontalStackLayout>
+                </Border>
+
+            </Grid>
+
+
+
+        </Grid>
+        
+        <!-- ================= 底部 ================= -->
+        <Grid
+            Grid.Row="2"
+            Padding="28,10,28,16">
+
+            <Border
+                BackgroundColor="White"
+                StrokeThickness="0"
+                Padding="6">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="28"/>
+                </Border.StrokeShape>
+
+                <Border.Shadow>
+                    <Shadow
+                        Opacity="0.12"
+                        Radius="12"
+                        Offset="0,3"/>
+                </Border.Shadow>
+
+                <Grid ColumnDefinitions="*,*,*">
+
+                    <!-- 聊天 -->
+                    <VerticalStackLayout
+                        Grid.Column="0"
+                        Spacing="3"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Chat_Tapped"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                        
+                        <Image
+                            x:Name="ChatIcon"
+                            Source="talk_select.png"
+                            WidthRequest="24"
+                            HeightRequest="24"/>
+
+                        <Label
+                            x:Name="ChatLabel"
+                            Text="聊天"
+                            FontSize="11"
+                            HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+
+                    <!-- 通讯录 -->
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Spacing="3"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="Contact_Tapped"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Image
+                            x:Name="ContactIcon"
+                            Source="phone.png"
+                            WidthRequest="24"
+                            HeightRequest="24"/>
+
+                        <Label
+                            x:Name="ContactLabel"
+                            Text="通讯录"
+                            FontSize="11"
+                            HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+
+                    <!-- 我的 -->
+                    <VerticalStackLayout
+                        Grid.Column="2"
+                        Spacing="3"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <VerticalStackLayout.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="My_Tapped"/>
+                        </VerticalStackLayout.GestureRecognizers>
+                        <Image
+                            x:Name="MyIcon"
+                            Source="my.png"
+                            WidthRequest="24"
+                            HeightRequest="24"/>
+
+                        <Label
+                            x:Name="MyLabel"
+                            Text="我的"
+                            FontSize="11"
+                            HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AzurChat.RegisterPage"
+    Title="注册"
+    Shell.NavBarIsVisible="False">
+
+    <Grid
+        BackgroundColor="#ECF3FA"
+        RowDefinitions="50,*">
+
+        <!-- ================= 顶部导航栏 ================= -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="White"
+            ColumnDefinitions="50,*,50">
+
+            <!-- 返回 -->
+            <ImageButton
+                x:Name="BackButton"
+                Grid.Column="0"
+                Source="go.png"
+                WidthRequest="30"
+                HeightRequest="30"
+                Padding="5"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Clicked="OnBackClicked"/>
+
+            <!-- 标题 -->
+            <Label
+                Grid.Column="1"
+                Text="注册"
+                FontSize="20"
+                FontAttributes="Bold"
+                TextColor="Black"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+        </Grid>
+
+
+        <!-- ================= 注册区域 ================= -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            VerticalOptions="Center"
+            HorizontalOptions="Fill"
+            Margin="35,0"
+            Spacing="12">
+
+            <!-- 用户名 -->
+            <Border
+                BackgroundColor="White"
+                Stroke="#22000000"
+                StrokeThickness="1"
+                HeightRequest="58"
+                Padding="16,0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20"/>
+                </Border.StrokeShape>
+
+                <Entry
+                    x:Name="UserEntry"
+                    Placeholder="请输入用户名"
+                    BackgroundColor="Transparent"
+                    FontSize="16"
+                    VerticalOptions="Center"/>
+            </Border>
+            
+            <!-- 密码 -->
+            <Border
+                BackgroundColor="White"
+                Stroke="#22000000"
+                StrokeThickness="1"
+                HeightRequest="58"
+                Padding="16,0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20"/>
+                </Border.StrokeShape>
+
+                <Entry
+                    x:Name="PasswordEntry"
+                    Placeholder="请输入密码"
+                    IsPassword="True"
+                    BackgroundColor="Transparent"
+                    FontSize="16"
+                    VerticalOptions="Center"/>
+
+            </Border>
+            
+            <!-- url -->
+            <Border
+                BackgroundColor="White"
+                Stroke="#22000000"
+                StrokeThickness="1"
+                HeightRequest="58"
+                Padding="16,0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20"/>
+                </Border.StrokeShape>
+
+                <Entry
+                    x:Name="UrlEntry"
+                    Placeholder="请输入Url"
+                    BackgroundColor="Transparent"
+                    FontSize="16"
+                    VerticalOptions="Center"/>
+
+            </Border>
+
+            <!-- API -->
+            <Border
+                BackgroundColor="White"
+                Stroke="#22000000"
+                StrokeThickness="1"
+                HeightRequest="58"
+                Padding="16,0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20"/>
+                </Border.StrokeShape>
+
+                <Entry
+                    x:Name="ApiEntry"
+                    Placeholder="请输入API"
+                    BackgroundColor="Transparent"
+                    FontSize="16"
+                    VerticalOptions="Center"/>
+
+            </Border>
+            <!-- 模型 -->
+            <Border
+                BackgroundColor="White"
+                Stroke="#22000000"
+                StrokeThickness="1"
+                HeightRequest="58"
+                Padding="16,0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="20"/>
+                </Border.StrokeShape>
+
+                <Picker
+                    x:Name="ModelPicker"
+                    Title="请选择模型"
+                    FontSize="16"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Center"
+                    Focused="OnModelPickerFocused"/>
+
+            </Border>
+            <Label
+                x:Name="MessageLabel"
+                TextColor="Black"
+                HorizontalOptions="Center"
+                IsVisible="False"/>
+            <!-- 注册按钮 -->
+            <Button
+                x:Name="RegisterButton"
+                Text="注册"
+                HeightRequest="58"
+                Margin="0,12,0,0"
+                HorizontalOptions="Fill"
+                BackgroundColor="#7DB9D8"
+                TextColor="White"
+                FontSize="16"
+                FontAttributes="Bold"
+                CornerRadius="20"
+                BorderWidth="0"
+                Clicked="OnRegisterClicked"/>
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

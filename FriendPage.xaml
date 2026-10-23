@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AzurChat.FriendPage"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#ECF3FA">
+
+    <Grid RowDefinitions="50,*">
+
+        <!-- 顶部标题 -->
+        <Grid Grid.Row="0"
+              BackgroundColor="White"
+              Padding="14,0"
+              ColumnDefinitions="40,*,40">
+
+            <ImageButton
+                Grid.Column="0"
+                Source="go.png"
+                WidthRequest="24"
+                HeightRequest="24"
+                Padding="2"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Command="{Binding CloseCommand}"/>
+
+            <Label
+                Grid.Column="1"
+                Text="申请加好友"
+                FontSize="18"
+                TextColor="#202020"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+        </Grid>
+
+        <!-- 页面主体 -->
+        <VerticalStackLayout
+            Grid.Row="1"
+            Spacing="0">
+
+            <!-- 好友头像与名称 -->
+            <Grid Padding="20"
+                  ColumnDefinitions="60,*"
+                  ColumnSpacing="10">
+
+                <Border
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 30"
+                    BackgroundColor="#DDDDDD">
+
+                    <Image
+                        Source = "{Binding AvatarImage, Mode = TwoWay}"
+                        WidthRequest="60"
+                        HeightRequest="60"
+                        Aspect="AspectFill"/>
+
+                </Border>
+
+                <Label
+                    Grid.Column="1"
+                    Text="{Binding FriendName}"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="#333333"
+                    VerticalOptions="Center"/>
+
+            </Grid>
+
+            <!-- 验证消息、备注、分组 -->
+            <VerticalStackLayout
+                Padding="20,10"
+                Spacing="18">
+
+                <Grid RowDefinitions="Auto,44"
+                      RowSpacing="8">
+
+                    <Label
+                        Text="你是谁？"
+                        FontSize="14"
+                        TextColor="#333333"/>
+
+                    <Border
+                        Grid.Row="1"
+                        BackgroundColor="White"
+                        Stroke="#E0E0E0"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10">
+
+                        <Entry
+                            Text="{Binding Verify, Mode=TwoWay}"
+                            FontSize="14"
+                            BackgroundColor="Transparent"
+                            Margin="10,0"/>
+
+                    </Border>
+                </Grid>
+
+                <Grid RowDefinitions="Auto,44"
+                      RowSpacing="8">
+
+                    <Label
+                        Text="备注"
+                        FontSize="14"
+                        TextColor="#333333"/>
+
+                    <Border
+                        Grid.Row="1"
+                        BackgroundColor="White"
+                        Stroke="#E0E0E0"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10">
+
+                        <Entry
+                            Text = "{Binding Nickname, Mode=TwoWay}"
+                            Placeholder="{Binding NicknamePlaceholder, Mode=TwoWay}"
+                            FontSize="14"
+                            BackgroundColor="Transparent"
+                            Margin="10,0"/>
+                        
+
+                    </Border>
+                </Grid>
+
+                <Grid RowDefinitions="Auto,44"
+                      RowSpacing="8">
+
+                    <Label
+                        Text="分组"
+                        FontSize="14"
+                        TextColor="#333333"/>
+
+                    <Border
+                        Grid.Row="1"
+                        BackgroundColor="White"
+                        Stroke="#E0E0E0"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10">
+
+                        <Entry
+                            Placeholder="我的舰娘"
+                            Text="{Binding FriendGroup}"
+                            PlaceholderColor="#999999"
+                            TextColor="#333333"
+                            BackgroundColor="Transparent" />
+
+                    </Border>
+                </Grid>
+
+                <!-- 操作按钮 -->
+                <Grid ColumnDefinitions="*,*"
+                      ColumnSpacing="15"
+                      Margin="0,12,0,0">
+
+                    <Button
+    
+                        Grid.Column="0"
+                        Text="确认"
+                        HeightRequest="42"
+                        CornerRadius="10"
+                        BackgroundColor="#B7D0EA"
+                        TextColor="#202020"
+                        Command="{Binding ConfirmCommand}"/>
+
+                    <Button
+                        Grid.Column="1"
+                        Text="取消"
+                        HeightRequest="42"
+                        CornerRadius="10"
+                        BackgroundColor="#DCE8F5"
+                        TextColor="#202020"
+                        Command="{Binding CloseCommand}" />
+
+                </Grid>
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

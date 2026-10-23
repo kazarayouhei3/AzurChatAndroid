@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AzurChat.Pages.PersonPage"
+    BackgroundColor="#E6F0FF"
+    Padding="0">
+
+    <Grid RowDefinitions="*"
+          RowSpacing="0">
+        
+        <!-- 页面内容 -->
+        <Grid Grid.Row="0"
+              RowDefinitions="Auto,Auto,*"
+              RowSpacing="0"
+              Padding="0,16,0,0">
+
+            <!-- 个人信息卡片 -->
+            <Border Grid.Row="0"
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    Padding="16,20"
+                    StrokeShape="RoundRectangle 20"
+                    Margin="12,0,12,0">
+
+                <Grid ColumnDefinitions="90,*"
+                      ColumnSpacing="12">
+
+                    <!-- 圆形头像 -->
+                    <Image
+                        x:Name="head"
+                        Grid.Column="0"
+                        WidthRequest="90"
+                        HeightRequest="90"
+                        Aspect="AspectFill"
+                        VerticalOptions="Center">
+
+                        <Image.Clip>
+                            <EllipseGeometry
+                                Center="45,45"
+                                RadiusX="45"
+                                RadiusY="45"/>
+                        </Image.Clip>
+                    </Image>
+
+                    
+                    <!-- 昵称、签名、等级 -->
+                    <Grid Grid.Column="1"
+                          RowDefinitions="Auto,Auto,Auto"
+                          RowSpacing="8"
+                          VerticalOptions="Center">
+
+                        <!-- 昵称 -->
+                        <Label
+                            x:Name="name"
+                            Grid.Row="0"
+                            FontSize="15"
+                            TextColor="#2F3542"
+                            LineBreakMode="TailTruncation"/>
+
+                        <!-- 签名，点击进入编辑页面 -->
+                        <Grid Grid.Row="1"
+                              ColumnDefinitions="*,24"
+                              ColumnSpacing="8"
+                              MinimumHeightRequest="30">
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="OnSignatureClicked"/>
+                            </Grid.GestureRecognizers>
+
+                            <Label
+                                x:Name="lineEdit"
+                                Grid.Column="0"
+                                Text="指挥官，请写下你的誓言吧！"
+                                FontSize="12"
+                                TextColor="#999999"
+                                VerticalOptions="Center"
+                                LineBreakMode="TailTruncation"/>
+
+                            <Label
+                                Grid.Column="1"
+                                Text="›"
+                                FontSize="24"
+                                TextColor="#999999"
+                                HorizontalTextAlignment="End"
+                                VerticalOptions="Center"/>
+                        </Grid>
+
+                        <!-- 等级 -->
+                        <Label
+                            x:Name="rank"
+                            Grid.Row="2"
+                            FontSize="10"
+                            TextColor="#2F3542"/>
+
+                    </Grid>
+
+                </Grid>
+            </Border>
+
+            <!-- 功能卡片 -->
+            <VerticalStackLayout
+                Grid.Row="1"
+                Padding="0,16,0,0"
+                Margin="12,0,12,0"
+                Spacing="0">
+
+                <Border
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20,20,0,0">
+
+                    <Grid Padding="12"
+                          ColumnDefinitions="20,*"
+                          ColumnSpacing="10">
+
+                        <Image Source="record.svg"
+                               WidthRequest="20"
+                               HeightRequest="20"/>
+
+                        <Label Grid.Column="1"
+                               Text="我的资料"
+                               FontSize="10"
+                               TextColor="#2F3542"
+                               VerticalOptions="Center"/>
+                        
+                    </Grid>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Tapped="OnPersoncordClicked"/>
+                    </Border.GestureRecognizers>
+                </Border>
+                <BoxView
+                    HeightRequest="1"
+                    BackgroundColor="#E8E8E8"
+                    Margin="12,0"
+                    HorizontalOptions="Fill"/>
+                <Border
+                    BackgroundColor="White"
+                    StrokeThickness="0">
+
+                    <Grid Padding="12"
+                          ColumnDefinitions="20,*"
+                          ColumnSpacing="10">
+
+                        <Image Source="arch.svg"
+                               WidthRequest="20"
+                               HeightRequest="20"/>
+
+                        <Label Grid.Column="1"
+                               Text="我的成就"
+                               FontSize="10"
+                               TextColor="#2F3542"
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+                <BoxView
+                    HeightRequest="1"
+                    BackgroundColor="#E8E8E8"
+                    Margin="12,0"
+                    HorizontalOptions="Fill"/>
+                <Border
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 0,0,20,20">
+
+                    <Grid Padding="12"
+                          ColumnDefinitions="20,*"
+                          ColumnSpacing="10">
+
+                        <Image Source="mem.svg"
+                               WidthRequest="20"
+                               HeightRequest="20"/>
+
+                        <Label Grid.Column="1"
+                               Text="我的回忆"
+                               FontSize="10"
+                               TextColor="#2F3542"
+                               VerticalOptions="Center"/>
+                    </Grid>
+                </Border>
+            </VerticalStackLayout>
+
+        </Grid>
+    </Grid>
+</ContentPage>

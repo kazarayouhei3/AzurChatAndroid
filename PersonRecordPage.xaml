@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AzurChat.Pages.PersonRecordPage" 
+    Shell.NavBarIsVisible="True"
+    Title="个人信息"
+    BackgroundColor="#E6F0FF">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="0,12" Spacing="1">
+
+            <!-- 头像 -->
+            <Grid BackgroundColor="White"
+                  Padding="16,12"
+                  ColumnDefinitions="*,60,24"
+                  ColumnSpacing="12">
+                   <Grid.GestureRecognizers>
+                          <!-- <TapGestureRecognizer Tapped="OnAvatarClicked"/> -->
+                   </Grid.GestureRecognizers>
+                   <Label Text="头像"
+                          VerticalOptions="Center"/>
+                <Image x:Name="avatar"
+                       Grid.Column="1"
+                       WidthRequest="60"
+                       HeightRequest="60"
+                       Aspect="AspectFill">
+                    <Image.Clip>
+                        <EllipseGeometry Center="30,30"
+                                         RadiusX="30"
+                                         RadiusY="30"/>
+                    </Image.Clip>
+                </Image>
+                <Label Grid.Column="2"
+                       Text="›"
+                       FontSize="24"
+                       VerticalOptions="Center"/>
+            </Grid>
+
+            <!-- 昵称 -->
+            <Grid BackgroundColor="White"
+                  Padding="16"
+                  ColumnDefinitions="90,*,24">
+                <Grid.GestureRecognizers>
+                       <TapGestureRecognizer Tapped="OnNameClicked"/>
+                </Grid.GestureRecognizers>
+                   
+                <Label Text="昵称"/>
+                <Label x:Name="name"
+                       Grid.Column="1"
+                       HorizontalTextAlignment="End"/>
+                <Label Grid.Column="2" Text="›"
+                       HorizontalTextAlignment="End"/>
+            </Grid>
+
+            <!-- 签名 -->
+            <Grid BackgroundColor="White"
+                  Padding="16"
+                  ColumnDefinitions="90,*,24">
+                   <Grid.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnSignatureClicked"/>
+                   </Grid.GestureRecognizers>
+                   <Label Text="签名"/>
+                <Label x:Name="line"
+                       Grid.Column="1"
+                       HorizontalTextAlignment="End"
+                       LineBreakMode="TailTruncation"/>
+                <Label Grid.Column="2" Text="›"
+                       HorizontalTextAlignment="End"/>
+            </Grid>
+
+            <!-- 地区 -->
+            <Grid BackgroundColor="White"
+                  Padding="16"
+                  ColumnDefinitions="90,*,24">
+                   <Grid.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnRegionClicked"/>
+                   </Grid.GestureRecognizers>
+                   <Label Text="地区"/>
+                <Label x:Name="region"
+                       Grid.Column="1"
+                       HorizontalTextAlignment="End"/>
+                <Label Grid.Column="2" Text="›"
+                       HorizontalTextAlignment="End"/>
+            </Grid>
+
+            <!-- 生日 -->
+            <Grid BackgroundColor="White"
+                  Padding="16"
+                  ColumnDefinitions="90,*,24">
+                   <Grid.GestureRecognizers>
+                          <TapGestureRecognizer Tapped="OnBirthdayClicked"/>
+                   </Grid.GestureRecognizers>
+                   <Label Text="生日"/>
+                <Label x:Name="birthday"
+                       Grid.Column="1"
+                       HorizontalTextAlignment="End"/>
+                <Label Grid.Column="2" Text="›"
+                       HorizontalTextAlignment="End"/>
+            </Grid>
+
+            <!-- 等级 -->
+            <Grid BackgroundColor="White"
+                  Padding="16"
+                  ColumnDefinitions="90,*">
+                   
+                   <Label Text="等级"/>
+                <Label x:Name="level"
+                       Grid.Column="1"
+                       HorizontalTextAlignment="End"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

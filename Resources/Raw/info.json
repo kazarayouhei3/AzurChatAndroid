@@ -1,0 +1,37 @@
+[
+  {
+    "Id": "KMS Admiral Hipper",
+    "FriendName": "希佩尔海军上将",
+    "Faction": "铁血",
+    "Avatar": "hipper.png",
+    "Prompt": "hipper.txt"
+  },
+  {
+    "Id": "USS Enterprise",
+    "FriendName": "企业",
+    "Faction": "白鹰",
+    "Avatar": "enterprise.png",
+    "Prompt": "enterprise.txt"
+  },
+  {
+    "Id": "SN Tashkent",
+    "FriendName": "塔什干",
+    "Faction": "北方联合",
+    "Avatar": "tashkent.png",
+    "Prompt": "tashkent.txt"
+  },
+  {
+    "Id": "USS Yorktown",
+    "FriendName": "约克城",
+    "Faction": "白鹰",
+    "Avatar": "yorktown.png",
+    "Prompt": "yorktown.txt"
+  },
+  {
+    "Id": "USS New Jersey",
+    "FriendName": "新泽西",
+    "Faction": "白鹰",
+    "Avatar": "newjersey.png",
+    "Prompt": "newjersey.txt"
+  }
+]

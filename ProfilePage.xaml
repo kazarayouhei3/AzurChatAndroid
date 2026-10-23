@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AzurChat.Pages.ProfilePage"
+    Shell.NavBarIsVisible="True"
+    BackgroundColor="#E6F0FF">
+
+    <Grid>
+
+        <!-- 点击空白区域 -->
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="OnBlankTapped"/>
+        </Grid.GestureRecognizers>
+
+        <VerticalStackLayout Padding="20,28"
+                             Spacing="12"
+                             VerticalOptions="Start">
+
+            <Border BackgroundColor="White"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="12,4">
+
+                <Entry
+                    x:Name="ValueEntry"
+                    FontSize="16"
+                    TextColor="#333333"
+                    Placeholder="指挥官，请写下你的誓言吧！"
+                    PlaceholderColor="#999999"
+                    BackgroundColor="Transparent"
+                    ClearButtonVisibility="WhileEditing"
+                    Unfocused="OnValueUnfocused"/>
+            </Border>
+
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

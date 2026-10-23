@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    x:Class="AzurChat.AddFriendPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#ECF3FA">
+
+    <Grid RowDefinitions="50,Auto,*">
+
+        <!-- ================= 顶部 ================= -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="White"
+            Padding="14,0"
+            ColumnDefinitions="40,*,40">
+
+            <ImageButton
+                x:Name="BackButton"
+                Grid.Column="0"
+                Source="go.png"
+                WidthRequest="24"
+                HeightRequest="24"
+                Padding="2"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Start"
+                VerticalOptions="Center"
+                Clicked="BackButton_Clicked"/>
+
+            <Label
+                Grid.Column="1"
+                Text="新朋友"
+                FontSize="18"
+                TextColor="#202020"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+        </Grid>
+
+        <!-- ================= 搜索 ================= -->
+        <Grid
+            Grid.Row="1"
+            BackgroundColor="White"
+            Padding="12,8"
+            ColumnDefinitions="*,40"
+            ColumnSpacing="4">
+
+            <Border
+                Grid.Column="0"
+                BackgroundColor="White"
+                Stroke="#E0E0E0"
+                StrokeThickness="1"
+                Padding="10,0">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+
+                <Entry x:Name="SearchEntry"
+                       Placeholder="搜索朋友"
+                       FontSize="14"
+                       BackgroundColor="Transparent"
+                       TextChanged="SearchEntry_TextChanged"/>
+            </Border>
+
+            <ImageButton
+                Grid.Column="1"
+                Source="search.png"
+                WidthRequest="24"
+                HeightRequest="24"
+                Padding="2"
+                BackgroundColor="Transparent"
+                VerticalOptions="Center"/>
+
+        </Grid>
+
+        <!-- ================= 好友分组 ================= -->
+        <ScrollView Grid.Row="2">
+            <ScrollView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="HideSuggest_Tapped"/>
+            </ScrollView.GestureRecognizers>
+
+            <VerticalStackLayout x:Name="GroupList"
+                                 Spacing="0"
+                                 Padding="0,8,0,12"/>
+        </ScrollView>
+        
+        
+        <Grid x:Name="SuggestDismissLayer"
+              Grid.Row="2"
+              BackgroundColor="Transparent"
+              IsVisible="False"
+              ZIndex="5">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="HideSuggest_Tapped"/>
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        
+        <!-- 搜索建议浮层 -->
+        <Grid x:Name="SuggestPopup"
+              Grid.Row="1"
+              Grid.RowSpan="2"
+              IsVisible="False"
+              ZIndex="10"
+              Margin="12,49,52,0"
+              VerticalOptions="Start"
+              RowDefinitions="12,Auto">
+
+            <!-- 第一行：三角形 -->
+            <Path Grid.Row="0"
+                  Data="M 20,12 L 30,0 L 40,12 Z"
+                  Fill="White"
+                  HeightRequest="12"
+                  WidthRequest="60"
+                  HorizontalOptions="Start"/>
+
+            <!-- 第二行：原来的搜索建议框 -->
+            <Border Grid.Row="1"
+                    BackgroundColor="White"
+                    Stroke="#E4E7ED"
+                    StrokeThickness="1">
+
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+
+                
+                <CollectionView x:Name="SuggestList"
+                                SelectionMode="None"
+                                HeightRequest="50">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid HeightRequest="50"
+                                  Padding="10,6"
+                                  ColumnDefinitions="32,*,70"
+                                  ColumnSpacing="10">
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Tapped="SuggestItem_Tapped"
+                                        CommandParameter="{Binding Id}"/>
+                                </Grid.GestureRecognizers>
+                                <!-- 头像 -->
+                                <Image Grid.Column="0"
+                                       Source="{Binding Avatar}"
+                                       WidthRequest="32"
+                                       HeightRequest="32"
+                                       Aspect="AspectFill"/>
+
+                                <!-- 角色名称 -->
+                                <Label Grid.Column="1"
+                                       Text="{Binding FriendName}"
+                                       FontSize="14"
+                                       TextColor="#333333"
+                                       VerticalOptions="Center"/>
+
+                                <!-- 添加按钮 -->
+                                <Button Grid.Column="2"
+                                        Text="{Binding ButtonText}"
+                                        IsEnabled="{Binding CanAdd}"
+                                        BackgroundColor="{Binding ButtonColor}"
+                                        TextColor="White"
+                                        FontSize="12"
+                                        HeightRequest="26"
+                                        CornerRadius="13"
+                                        Padding="5,0"
+                                        Clicked="SuggestAdd_Clicked"
+                                        CommandParameter="{Binding Id}"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+
+                </CollectionView>
+
+
+            </Border>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AzurChat.ChatPage"
+    BackgroundColor="#ECF3FA"
+    NavigationPage.HasNavigationBar="True">
+
+    <!-- 系统导航栏右上角菜单 -->
+    <ContentPage.ToolbarItems>
+        <ToolbarItem
+            Text="菜单"
+            IconImageSource="caidan.png"
+            Order="Primary"
+            Clicked="MenuButton_Clicked" />
+    </ContentPage.ToolbarItems>
+
+    <Grid
+        RowDefinitions="*,50"
+        RowSpacing="0">
+
+        <!-- 聊天消息区域 -->
+        <ScrollView
+            x:Name="MessageScroll"
+            Grid.Row="0"
+            BackgroundColor="#ECF3FA"
+            VerticalScrollBarVisibility="Default">
+
+            <VerticalStackLayout
+                x:Name="MessageContainer"
+                Padding="8,10"
+                Spacing="8" />
+
+        </ScrollView>
+
+        <!-- 底部输入栏 -->
+        <Grid
+            Grid.Row="1"
+            BackgroundColor="White"
+            ColumnDefinitions="*"
+            ColumnSpacing="0"
+            Padding="8,5">
+
+            <!-- 输入框 -->
+            <Border
+                Grid.Column="0"
+                BackgroundColor="White"
+                Stroke="#E0E0E0"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 12"
+                Padding="8,0">
+
+                <Entry
+                    x:Name="MessageInput"
+                    BackgroundColor="Transparent"
+                    TextColor="#222222"
+                    FontSize="14"
+                    Placeholder=""
+                    ClearButtonVisibility="Never"
+                    VerticalOptions="Center"
+                    ReturnType="Send"
+                    Completed="MessageInput_Completed" />
+
+            </Border>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
