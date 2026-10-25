@@ -16,6 +16,12 @@ public interface IAuthService
         string model);
     Task RefreshCurrentUserAsync();
     Task UpdateSignatureAsync(string signature);
+    Task<bool> UpdateAiSettingsAsync(string url, string api);
+    Task UpdateNicknameAsync(string nickname);
+    Task<string> GetDecryptedApiAsync();
+    Task UpdateRegionAsync(string region);
+    Task UpdateBirthdayAsync(DateTime birthday);
+    Task UpdateAvatarAsync(string avatar);
     bool IsLoggedIn();
 
     void RestoreLogin();
@@ -54,6 +60,30 @@ public class AuthService: IAuthService
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.Id == userId);
     }
+    public async Task<string> GetDecryptedApiAsync()
+    {
+        if (CurrentUser == null ||
+            string.IsNullOrWhiteSpace(CurrentUser.Api))
+            return "";
+
+        return await _encryptionService.DecryptAsync(CurrentUser.Api);
+    }
+    public async Task UpdateAvatarAsync(string avatar)
+    {
+        if (CurrentUser == null)
+            throw new InvalidOperationException("用户未登录");
+
+        var user = await _userContext.User.FindAsync(CurrentUser.Id);
+
+        if (user == null)
+            throw new InvalidOperationException("用户不存在");
+
+        user.Avatar = avatar;
+
+        await _userContext.SaveChangesAsync();
+
+        CurrentUser.Avatar = avatar;
+    }
     
     public async Task UpdateSignatureAsync(string signature)
     {
@@ -70,6 +100,81 @@ public class AuthService: IAuthService
         await _userContext.SaveChangesAsync();
 
         CurrentUser.Signature = signature;
+    }
+    public async Task<bool> UpdateAiSettingsAsync(string url, string api)
+    {
+        if (CurrentUser == null)
+            return false;
+
+        var user = await _userContext.User.FindAsync(CurrentUser.Id);
+
+        if (user == null)
+            return false;
+
+        // API Key 加密后保存
+        string encryptedApi = await _encryptionService.EncryptAsync(api);
+
+        user.Url = url;
+        user.Api = encryptedApi;
+        user.UpdatedAt = DateTime.Now;
+
+        await _userContext.SaveChangesAsync();
+
+        CurrentUser.Url = url;
+        CurrentUser.Api = encryptedApi;
+        CurrentUser.UpdatedAt = user.UpdatedAt;
+
+        return true;
+    }
+    public async Task UpdateNicknameAsync(string nickname)
+    {
+        if (CurrentUser == null)
+            throw new InvalidOperationException("用户未登录");
+
+        var user = await _userContext.User.FindAsync(CurrentUser.Id);
+
+        if (user == null)
+            throw new InvalidOperationException("用户不存在");
+
+        user.Nickname = nickname;
+
+        await _userContext.SaveChangesAsync();
+
+        CurrentUser.Nickname = nickname;
+    }
+
+    public async Task UpdateRegionAsync(string region)
+    {
+        if (CurrentUser == null)
+            throw new InvalidOperationException("用户未登录");
+
+        var user = await _userContext.User.FindAsync(CurrentUser.Id);
+
+        if (user == null)
+            throw new InvalidOperationException("用户不存在");
+
+        user.Region = region;
+
+        await _userContext.SaveChangesAsync();
+
+        CurrentUser.Region = region;
+    }
+
+    public async Task UpdateBirthdayAsync(DateTime birthday)
+    {
+        if (CurrentUser == null)
+            throw new InvalidOperationException("用户未登录");
+
+        var user = await _userContext.User.FindAsync(CurrentUser.Id);
+
+        if (user == null)
+            throw new InvalidOperationException("用户不存在");
+
+        user.Birthday = birthday;
+
+        await _userContext.SaveChangesAsync();
+
+        CurrentUser.Birthday = birthday;
     }
     private static string HashPassword(string password)
     {

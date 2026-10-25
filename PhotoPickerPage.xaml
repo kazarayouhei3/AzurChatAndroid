@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AzurChat.Pages.PhotoPickerPage"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="#ECF3FA">
+
+    <Grid RowDefinitions="56,52,*,76">
+
+        <!-- 标题栏 -->
+        <Grid BackgroundColor="White"
+              ColumnDefinitions="56,*,56">
+
+            <Label Text="‹"
+                   FontSize="32"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Back_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label Grid.Column="1"
+                   Text="选择头像"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </Grid>
+
+        <!-- 分类 -->
+        <Grid Grid.Row="1"
+              BackgroundColor="White"
+              ColumnDefinitions="*,*">
+
+            <Button Text="手机相册"
+                    Grid.Column="0"
+                    BackgroundColor="Transparent"
+                    TextColor="#365A9D"
+                    Clicked="Album_Clicked"/>
+
+            <Button Text="手机文件"
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    TextColor="#365A9D"
+                    Clicked="Files_Clicked"/>
+        </Grid>
+
+        <!-- 相册网格 -->
+        <CollectionView
+            x:Name="PhotosView"
+            Grid.Row="2"
+            Margin="8"
+            SelectionMode="Single"
+            SelectionChanged="Photos_SelectionChanged">
+
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    Orientation="Vertical"
+                    Span="3"
+                    HorizontalItemSpacing="5"
+                    VerticalItemSpacing="5"/>
+            </CollectionView.ItemsLayout>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid HeightRequest="110">
+                        <Image
+                            Source="{Binding Thumbnail}"
+                            Aspect="AspectFill"/>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- 没有相册权限时显示 -->
+        <VerticalStackLayout
+            x:Name="PermissionView"
+            Grid.Row="2"
+            Spacing="16"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            IsVisible="False">
+
+            <Label
+                Text="无法访问手机相册"
+                FontSize="18"
+                FontAttributes="Bold"
+                TextColor="#465A73"
+                HorizontalOptions="Center"/>
+
+            <Label
+                Text="允许访问照片后，即可选择头像"
+                FontSize="14"
+                TextColor="#8895A7"
+                HorizontalOptions="Center"/>
+
+            <Button
+                Text="授权相册"
+                BackgroundColor="#365A9D"
+                TextColor="White"
+                CornerRadius="12"
+                WidthRequest="180"
+                Clicked="RequestPermission_Clicked"/>
+
+            <Label
+                Text="无法授权？前往系统设置"
+                TextColor="#365A9D"
+                FontSize="13"
+                HorizontalOptions="Center">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="OpenSettings_Tapped"/>
+                </Label.GestureRecognizers>
+
+            </Label>
+
+        </VerticalStackLayout>
+
+        <!-- 底部 -->
+        <Grid Grid.Row="3"
+              BackgroundColor="White"
+              Padding="16,10"
+              ColumnDefinitions="*,120">
+
+            <Label x:Name="SelectionLabel"
+                   Text="未选择照片"
+                   VerticalOptions="Center"/>
+
+            <Button x:Name="NextButton"
+                    Grid.Column="1"
+                    Text="下一步"
+                    BackgroundColor="#365A9D"
+                    TextColor="White"
+                    IsEnabled="False"
+                    Clicked="Next_Clicked"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>

@@ -175,20 +175,48 @@ public partial class ChatPage : ContentPage
     }
 
     // 用户消息：右侧绿色气泡
+    // 用户消息：右侧绿色气泡 + 当前用户头像
     private void AddRightMessage(string text, DateTime time)
     {
         CheckAndAddTime(time);
 
+        // 获取当前登录用户的头像
+        string userAvatar = _authService.CurrentUser?.Avatar ?? "";
+
+        var avatar = new Image
+        {
+            Source = string.IsNullOrWhiteSpace(userAvatar)
+                ? "user.png"
+                : userAvatar,
+
+            WidthRequest = 36,
+            HeightRequest = 36,
+            Aspect = Aspect.AspectFill,
+            VerticalOptions = LayoutOptions.Start,
+
+            Clip = new EllipseGeometry
+            {
+                Center = new Point(18, 18),
+                RadiusX = 18,
+                RadiusY = 18
+            }
+        };
+
+        // 原来的绿色消息气泡
         var bubble = CreateBubble(
             text,
             Color.FromArgb("#95EC69"));
 
+        // 消息在左，用户头像在右
         var layout = new HorizontalStackLayout
         {
+            Spacing = 8,
             HorizontalOptions = LayoutOptions.End,
+
             Children =
             {
-                bubble
+                bubble,
+                avatar
             }
         };
 
@@ -197,7 +225,6 @@ public partial class ChatPage : ContentPage
         if (!_isLoading)
             _ = ScrollToBottomAsync();
     }
-
     // 创建消息气泡
     private Border CreateBubble(string text, Color background)
     {

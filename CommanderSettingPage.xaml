@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="AzurChat.CommanderSettingPage"
+    BackgroundColor="#ECF3FA"
+    Shell.NavBarIsVisible="False"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowDefinitions="50,*" RowSpacing="0">
+
+        <!-- 顶部 -->
+        <Grid
+            Grid.Row="0"
+            BackgroundColor="White"
+            Padding="14,0"
+            ColumnDefinitions="40,*,40">
+
+            <Label
+                Text="‹"
+                FontSize="32"
+                TextColor="#222222"
+                VerticalOptions="Center">
+
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="BackButton_Clicked"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                Grid.Column="1"
+                Text="指挥官设置"
+                FontSize="18"
+                FontAttributes="Bold"
+                TextColor="#202020"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        </Grid>
+
+        <ScrollView Grid.Row="1">
+
+            <VerticalStackLayout
+                Padding="12,18,12,24"
+                Spacing="12">
+
+                <!-- 分组标题 -->
+                <Label
+                    Text="AI 设置"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="#365A9D"
+                    Margin="8,0,0,0"/>
+
+                <Border
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 20"
+                    Padding="16,6">
+
+                    <VerticalStackLayout Spacing="0">
+
+                        <!-- URL 标题 -->
+                        <Grid
+                            HeightRequest="56"
+                            ColumnDefinitions="*,24">
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="UrlSetting_Tapped"/>
+                            </Grid.GestureRecognizers>
+
+                            <Label
+                                Text="URL 地址"
+                                FontSize="16"
+                                TextColor="#222222"
+                                VerticalOptions="Center"/>
+
+                            <Label
+                                x:Name="UrlArrow"
+                                Grid.Column="1"
+                                Text="⌄"
+                                FontSize="24"
+                                TextColor="#999999"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Grid>
+
+                        <!-- URL 展开区域 -->
+                        <Grid
+                            x:Name="UrlPanel"
+                            IsVisible="False"
+                            HeightRequest="0"
+                            Opacity="0"
+                            InputTransparent="True"
+                            IsClippedToBounds="True">
+
+                            <VerticalStackLayout
+                                Padding="0,0,0,12"
+                                Spacing="8">
+
+                                <Entry
+                                    x:Name="UrlEntry"
+                                    Placeholder="请输入 URL"
+                                    FontSize="14"
+                                    TextColor="#888888"
+                                    BackgroundColor="Transparent"
+                                    Keyboard="Url"/>
+
+                                <Button
+                                    Text="保存 URL"
+                                    HeightRequest="40"
+                                    BackgroundColor="#365A9D"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Clicked="SaveUrl_Clicked"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- 分隔线 -->
+                        <BoxView
+                            HeightRequest="1"
+                            BackgroundColor="#EEEEEE"/>
+
+                        <!-- API 标题 -->
+                        <Grid
+                            HeightRequest="56"
+                            ColumnDefinitions="*,24">
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer
+                                    Tapped="ApiSetting_Tapped"/>
+                            </Grid.GestureRecognizers>
+
+                            <Label
+                                Text="API Key"
+                                FontSize="16"
+                                TextColor="#222222"
+                                VerticalOptions="Center"/>
+
+                            <Label
+                                x:Name="ApiArrow"
+                                Grid.Column="1"
+                                Text="⌄"
+                                FontSize="24"
+                                TextColor="#999999"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
+                        </Grid>
+
+                        <!-- API 展开区域 -->
+                        <Grid
+                            x:Name="ApiPanel"
+                            IsVisible="False"
+                            HeightRequest="0"
+                            Opacity="0"
+                            InputTransparent="True"
+                            IsClippedToBounds="True">
+
+                            <VerticalStackLayout
+                                Padding="0,0,0,12"
+                                Spacing="8">
+
+                                <Entry
+                                    x:Name="ApiEntry"
+                                    Placeholder="请输入 API Key"
+                                    FontSize="14"
+                                    TextColor="#888888"
+                                    BackgroundColor="Transparent"
+                                    IsPassword="False"/>
+
+                                <Button
+                                    Text="保存 API"
+                                    HeightRequest="40"
+                                    BackgroundColor="#365A9D"
+                                    TextColor="White"
+                                    CornerRadius="10"
+                                    Clicked="SaveApi_Clicked"/>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>

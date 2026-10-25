@@ -1,6 +1,7 @@
 ﻿using AzurChat.Data;
 using Microsoft.Extensions.Logging;
 using AzurChat.Services;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using AzurChat.Model;
 using AzurChat.Pages;
 using AzurChat.ViewModel;
@@ -18,7 +19,8 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 		builder
-			.UseMauiApp<App>()
+			.UseMauiApp<App>().
+			UseSkiaSharp()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -40,13 +42,15 @@ public static class MauiProgram
 		builder.Services.AddTransient<MainPage>();
 		builder.Services.AddScoped<AllFriendService>();
 		builder.Services.AddTransient<ProfilePage>();
-		builder.Services.AddTransient<PersonRecordPage>();
 		builder.Services.AddTransient<AddFriendPage>();
 		builder.Services.AddTransient<ChatPage>();
+		builder.Services.AddTransient<SettingPage>();
 		builder.Services.AddTransient<FriendViewModel>();
 		builder.Services.AddTransient<PersonPage>();
+		builder.Services.AddTransient<CommanderSettingPage>();
 		builder.Services.AddSingleton<MessageCacheService>();
 		builder.Services.AddTransient<CharaPage>();
+		builder.Services.AddTransient<PhotoPickerPage>();
 		builder.Services.AddSingleton<ChatService>();
 		builder.Services.AddTransient<FriendPage>();
 		

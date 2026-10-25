@@ -70,31 +70,35 @@ public partial class MainPage : ContentPage
     /// <returns>表示异步加载操作的任务。</returns>
     private async Task LoadUserDataAsync()
     {
-       try
-       {
-          // 从数据库刷新当前登录用户信息
-          await _authService.RefreshCurrentUserAsync();
+        try
+        {
+            // 每次从数据库重新查询当前用户
+            await _authService.RefreshCurrentUserAsync();
 
-          // 获取刷新后的用户对象
-          var user = _authService.CurrentUser;
+            var user = _authService.CurrentUser;
 
-          if (user == null)
-          {
-             System.Diagnostics.Debug.WriteLine("当前用户不存在");
-             return;
-          }
+            if (user == null)
+            {
+                System.Diagnostics.Debug.WriteLine("当前用户不存在");
+                UserAvatarButton.Source = "head.jpg";
+                return;
+            }
 
-          // 后续可在这里使用最新的用户信息更新页面
-          System.Diagnostics.Debug.WriteLine(
-             $"当前用户：{user.Username}，ID：{user.Id}");
-       }
-       catch (Exception ex)
-       {
-          System.Diagnostics.Debug.WriteLine(
-             $"加载用户信息失败：{ex.Message}");
-       }
+            // 刷新左上角头像
+            UserAvatarButton.Source =
+                !string.IsNullOrWhiteSpace(user.Avatar)
+                    ? ImageSource.FromFile(user.Avatar)
+                    : ImageSource.FromFile("head.jpg");
+
+            System.Diagnostics.Debug.WriteLine(
+                $"当前用户：{user.Username}，ID：{user.Id}");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine(
+                $"加载用户信息失败：{ex.Message}");
+        }
     }
-
 
     private async void Chat_Tapped(object sender, TappedEventArgs e)
     {
@@ -684,10 +688,12 @@ private Task AnimateContactHeight(
     }
 
     private async void SettingButton_Tapped(
-       object sender,
-       TappedEventArgs e)
+        object sender,
+        TappedEventArgs e)
     {
-       
+        var page = _serviceProvider.GetRequiredService<SettingPage>();
+
+        await Navigation.PushAsync(page);
     }
 
     private void My_Tapped(object sender, TappedEventArgs e)

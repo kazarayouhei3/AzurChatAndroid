@@ -8,8 +8,7 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 		Routing.RegisterRoute("person", typeof(PersonPage));
-		
-		Routing.RegisterRoute("personrecord", typeof(PersonRecordPage));
+	
 		Routing.RegisterRoute("editprofile", typeof(ProfilePage));
 		if(authService.IsLoggedIn())
 		{

@@ -86,18 +86,42 @@ public partial class ProfilePage : ContentPage, IQueryAttributable
 
         try
         {
-            // 没有变化，不重复写数据库
             if (value == _lastSavedValue)
                 return;
 
-            if (_field == "signature")
+            switch (_field)
             {
-                await _authService.UpdateSignatureAsync(value);
-            }
-            else
-            {
-                throw new NotSupportedException(
-                    "该字段的数据库更新功能尚未接入");
+                case "signature":
+                    await _authService.UpdateSignatureAsync(value);
+                    break;
+
+                case "nickname":
+                    if (string.IsNullOrWhiteSpace(value))
+                        throw new ArgumentException("昵称不能为空");
+
+                    await _authService.UpdateNicknameAsync(value);
+                    break;
+
+                case "region":
+                    await _authService.UpdateRegionAsync(value);
+                    break;
+
+                case "birthday":
+                    if (!DateTime.TryParseExact(
+                            value,
+                            "yyyy-MM-dd",
+                            System.Globalization.CultureInfo.InvariantCulture,
+                            System.Globalization.DateTimeStyles.None,
+                            out DateTime birthday))
+                    {
+                        throw new ArgumentException("生日格式必须为 yyyy-MM-dd");
+                    }
+
+                    await _authService.UpdateBirthdayAsync(birthday);
+                    break;
+
+                default:
+                    throw new InvalidOperationException("未知的编辑字段");
             }
 
             _lastSavedValue = value;
@@ -107,7 +131,6 @@ public partial class ProfilePage : ContentPage, IQueryAttributable
             _saveLock.Release();
         }
     }
-
     // 点击空白区域，结束输入并保存
     private void OnBlankTapped(
         object sender,

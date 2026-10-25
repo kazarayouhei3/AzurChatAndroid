@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+    x:Class="AzurChat.Pages.AvatarCropPage"
+    BackgroundColor="#17191E"
+    Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="56,*,120">
+
+        <!-- 顶部 -->
+        <Grid ColumnDefinitions="56,*,56">
+
+            <Label
+                Text="‹"
+                FontSize="32"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="Back_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+
+            <Label
+                Grid.Column="1"
+                Text="调整头像"
+                FontSize="18"
+                FontAttributes="Bold"
+                TextColor="White"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+
+            <Button
+                Grid.Column="2"
+                Text="重置"
+                FontSize="13"
+                TextColor="White"
+                BackgroundColor="Transparent"
+                Clicked="Reset_Clicked"/>
+
+        </Grid>
+
+        <!-- 裁剪区域 -->
+        <Grid Grid.Row="1">
+
+            <skia:SKCanvasView
+                x:Name="CropCanvas"
+                EnableTouchEvents="True"
+                PaintSurface="CropCanvas_PaintSurface"
+                IgnorePixelScaling="True"
+                Touch="CropCanvas_Touch"/>
+
+        </Grid>
+
+        <!-- 底部 -->
+        <VerticalStackLayout
+            Grid.Row="2"
+            Padding="20"
+            Spacing="14">
+
+            <Label
+                Text="拖动调整位置 · 双指缩放"
+                FontSize="14"
+                TextColor="#AAAAAA"
+                HorizontalOptions="Center"/>
+
+            <Button
+                Text="确定使用此头像"
+                HeightRequest="48"
+                BackgroundColor="#365A9D"
+                TextColor="White"
+                CornerRadius="12"
+                Clicked="Confirm_Clicked"/>
+
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>
