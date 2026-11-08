@@ -117,19 +117,51 @@ public class ChatService
         foreach (var message in history)
         {
             if (message.Sender == "user")
-                messages.Add(new UserChatMessage(message.Content));
+            {
+                
+                if (message.MessageType == "image" ||
+                    message.MessageType == "sticker")
+                {
+                    var userMessage = await BuildUserMessageAsync(
+                        message.Content,
+                        message.MediaPath);
+
+                    messages.Add(userMessage);
+                }
+                else
+                {
+                    messages.Add(new UserChatMessage(message.Content));
+                }
+
+            }
             else if (message.Sender == "assistant")
+            {
                 messages.Add(new AssistantChatMessage(message.Content));
+            }
         }
 
         // 9. 加入本次用户消息
         // 如果调用前已经保存到数据库，避免重复添加
-        bool alreadyIncluded = history.Count > 0
-            && history[^1].Sender == "user"
-            && history[^1].Content == userText;
+        // 9. 加入本次用户消息
+// 如果本次消息已经保存到数据库，就不要重复添加
 
-        if (!alreadyIncluded)
+        
+        bool alreadyIncluded = history.Count > 0
+                               && history[^1].Sender == "user"
+                               && (
+                                   history[^1].Content == userText
+                                   || (
+                                       (history[^1].MessageType == "image" ||
+                                        history[^1].MessageType == "sticker")
+                                       && string.IsNullOrWhiteSpace(userText)
+                                   )
+                               );
+
+
+        if (!alreadyIncluded && !string.IsNullOrWhiteSpace(userText))
+        {
             messages.Add(new UserChatMessage(userText));
+        }
 
         // 10. 请求 AI
         ChatCompletion response = await chatClient.CompleteChatAsync(messages);
@@ -184,5 +216,58 @@ public class ChatService
         {
             System.Diagnostics.Debug.WriteLine($"AI错误: {ex}");
         }
+    }
+    
+    private static async Task<UserChatMessage> BuildUserMessageAsync(
+        string? text,
+        string? imagePath)
+    {
+        // 纯文字
+        if (string.IsNullOrWhiteSpace(imagePath))
+        {
+            return new UserChatMessage(text ?? "");
+        }
+        if (!File.Exists(imagePath))
+        {
+            throw new FileNotFoundException(
+                "聊天图片文件不存在",
+                imagePath);
+        }
+        // 图片 + 文字
+        byte[] imageBytes = await File.ReadAllBytesAsync(imagePath);
+
+        string mimeType = Path.GetExtension(imagePath).ToLowerInvariant() switch
+        {
+            ".png" => "image/png",
+            ".webp" => "image/webp",
+            ".gif" => "image/gif",
+            _ => "image/jpeg"
+        };
+
+        
+        string messageText;
+
+        if (text == "[表情]")
+        {
+            messageText =
+                "用户发送了一个表情包。请结合表情中的画面、文字、情绪以及聊天上下文理解用户的意思，并以自然的聊天方式回应。";
+        }
+        else if (string.IsNullOrWhiteSpace(text) || text == "[图片]")
+        {
+            messageText =
+                "用户发送了一张图片，请自然回应。";
+        }
+        else
+        {
+            messageText = text;
+        }
+
+
+        return new UserChatMessage(
+            ChatMessageContentPart.CreateTextPart(messageText),
+            ChatMessageContentPart.CreateImagePart(
+                BinaryData.FromBytes(imageBytes),
+                mimeType)
+        );
     }
 }

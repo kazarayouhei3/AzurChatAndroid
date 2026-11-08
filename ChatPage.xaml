@@ -7,7 +7,6 @@
     BackgroundColor="#ECF3FA"
     NavigationPage.HasNavigationBar="True">
 
-    <!-- 系统导航栏右上角菜单 -->
     <ContentPage.ToolbarItems>
         <ToolbarItem
             Text="菜单"
@@ -16,16 +15,21 @@
             Clicked="MenuButton_Clicked" />
     </ContentPage.ToolbarItems>
 
-    <Grid
-        RowDefinitions="*,50"
-        RowSpacing="0">
+    <Grid RowDefinitions="*,Auto"
+          RowSpacing="0">
 
         <!-- 聊天消息区域 -->
+        
         <ScrollView
             x:Name="MessageScroll"
             Grid.Row="0"
             BackgroundColor="#ECF3FA"
             VerticalScrollBarVisibility="Default">
+
+            <ScrollView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="ChatArea_Tapped"/>
+            </ScrollView.GestureRecognizers>
+
 
             <VerticalStackLayout
                 x:Name="MessageContainer"
@@ -34,35 +38,307 @@
 
         </ScrollView>
 
-        <!-- 底部输入栏 -->
+        <!-- 底部区域 -->
         <Grid
             Grid.Row="1"
-            BackgroundColor="White"
-            ColumnDefinitions="*"
-            ColumnSpacing="0"
-            Padding="8,5">
+            RowDefinitions="50,Auto"
+            RowSpacing="0"
+            BackgroundColor="White">
 
-            <!-- 输入框 -->
-            <Border
-                Grid.Column="0"
-                BackgroundColor="White"
-                Stroke="#E0E0E0"
-                StrokeThickness="1"
-                StrokeShape="RoundRectangle 12"
-                Padding="8,0">
+            <!-- 输入栏 -->
+            <Grid
+                Grid.Row="0"
+                ColumnDefinitions="42,*,42"
+                ColumnSpacing="8"
+                Padding="8,5">
 
-                <Entry
-                    x:Name="MessageInput"
+                <!-- 左侧语音按钮 -->
+                <ImageButton
+                    Grid.Column="0"
+                    Source="voice.png"
                     BackgroundColor="Transparent"
-                    TextColor="#222222"
-                    FontSize="14"
-                    Placeholder=""
-                    ClearButtonVisibility="Never"
-                    VerticalOptions="Center"
-                    ReturnType="Send"
-                    Completed="MessageInput_Completed" />
+                    Padding="7"
+                    Aspect="AspectFit"
+                    Clicked="VoiceButton_Clicked" />
+
+                <!-- 中间输入框 -->
+                <Border
+                    Grid.Column="1"
+                    BackgroundColor="White"
+                    Stroke="#E0E0E0"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12"
+                    Padding="8,0">
+
+                    <Entry
+                        x:Name="MessageInput"
+                        BackgroundColor="Transparent"
+                        TextColor="#222222"
+                        FontSize="14"
+                        Placeholder=""
+                        ClearButtonVisibility="Never"
+                        VerticalOptions="Center"
+                        ReturnType="Send"
+                        Completed="MessageInput_Completed" />
+
+                </Border>
+
+                <!-- 右侧加号 -->
+                <ImageButton
+                    x:Name="PlusButton"
+                    Grid.Column="2"
+                    Source="plus.png"
+                    BackgroundColor="Transparent"
+                    Padding="7"
+                    Aspect="AspectFit"
+                    Clicked="PlusButton_Clicked" />
+
+            </Grid>
+
+            <!-- 展开功能区域 -->
+            <Grid
+                x:Name="FunctionPanel"
+                Grid.Row="1"
+                IsVisible="False"
+                HeightRequest="280"
+                BackgroundColor="#F7F8FC"
+                Padding="12,18,12,10">
+
+                <Grid
+                    ColumnDefinitions="*,*,*,*"
+                    ColumnSpacing="10"
+                    VerticalOptions="Start">
+
+                    <!-- 图片 -->
+                    <VerticalStackLayout
+                        Grid.Column="0"
+                        Spacing="8"
+                        HorizontalOptions="Center">
+
+                        <ImageButton
+                            Source="photo.png"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            BackgroundColor="Transparent"
+                            Clicked="PhotoButton_Clicked" />
+
+                        <Label
+                            Text="图片"
+                            FontSize="12"
+                            TextColor="#333333"
+                            HorizontalTextAlignment="Center" />
+
+                    </VerticalStackLayout>
+
+                    <!-- 拍照 -->
+                    <VerticalStackLayout
+                        Grid.Column="1"
+                        Spacing="8"
+                        HorizontalOptions="Center">
+
+                        <ImageButton
+                            Source="camera.png"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            BackgroundColor="Transparent"
+                            Clicked="CameraButton_Clicked" />
+
+                        <Label
+                            Text="拍照"
+                            FontSize="12"
+                            TextColor="#333333"
+                            HorizontalTextAlignment="Center" />
+
+                    </VerticalStackLayout>
+
+                    <!-- 表情 -->
+                    <VerticalStackLayout
+                        Grid.Column="2"
+                        Spacing="8"
+                        HorizontalOptions="Center">
+
+                        <ImageButton
+                            Source="emoji.png"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            BackgroundColor="Transparent"
+                            Clicked="EmojiButton_Clicked" />
+
+                        <Label
+                            Text="表情"
+                            FontSize="12"
+                            TextColor="#333333"
+                            HorizontalTextAlignment="Center" />
+
+                    </VerticalStackLayout>
+
+                    <!-- 语音通话 -->
+                    <VerticalStackLayout
+                        Grid.Column="3"
+                        Spacing="8"
+                        HorizontalOptions="Center">
+
+                        <ImageButton
+                            Source="call.png"
+                            WidthRequest="30"
+                            HeightRequest="30"
+                            BackgroundColor="Transparent"
+                            Clicked="CallButton_Clicked" />
+
+                        <Label
+                            Text="语音通话"
+                            FontSize="12"
+                            TextColor="#333333"
+                            HorizontalTextAlignment="Center" />
+
+                    </VerticalStackLayout>
+
+                </Grid>
+
+            </Grid>
+            
+            
+            <!-- Emoji 表情面板 -->
+            
+<!-- Emoji 面板 -->
+<Grid x:Name="EmojiPanel"
+      Grid.Row="1"
+      IsVisible="False"
+      HeightRequest="280"
+      BackgroundColor="#F7F8FC"
+      RowDefinitions="52,*">
+
+    
+<!-- 顶部：返回按钮 + 表情标签 -->
+<Grid Grid.Row="0"
+      ColumnDefinitions="40,*"
+      Padding="8,6,12,4">
+
+    <!-- 独立返回按钮 -->
+    <Grid Grid.Column="0"
+          BackgroundColor="Transparent">
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Tapped="EmojiBack_Tapped"/>
+        </Grid.GestureRecognizers>
+
+        <Label Text="‹"
+               FontSize="32"
+               TextColor="#3478C8"
+               HorizontalOptions="Center"
+               VerticalOptions="Center"
+               InputTransparent="True"/>
+    </Grid>
+
+    <!-- 圆角标签栏 -->
+    <Border Grid.Column="1"
+            BackgroundColor="#E4E9F1"
+            StrokeThickness="0"
+            StrokeShape="RoundRectangle 22">
+
+        <Grid ColumnDefinitions="*,*"
+              Padding="4">
+
+            <!-- Emoji表情 -->
+            <Border x:Name="EmojiTab"
+                    Grid.Column="0"
+                    BackgroundColor="White"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 18">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="EmojiTab_Tapped"/>
+                </Border.GestureRecognizers>
+
+                <Label x:Name="EmojiTabText"
+                       Text="Emoji表情"
+                       FontSize="14"
+                       TextColor="#3478C8"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       InputTransparent="True"/>
+            </Border>
+
+            <!-- 我的表情 -->
+            <Border x:Name="MyEmojiTab"
+                    Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 18">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="MyEmojiTab_Tapped"/>
+                </Border.GestureRecognizers>
+
+                <Label x:Name="MyEmojiTabText"
+                       Text="我的表情"
+                       FontSize="14"
+                       TextColor="#738096"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       InputTransparent="True"/>
+            </Border>
+
+        </Grid>
+    </Border>
+</Grid>
+
+
+    <!-- Emoji表情内容 -->
+    <ScrollView x:Name="EmojiContent"
+                Grid.Row="1"
+                IsVisible="True"
+                Padding="8,4">
+
+        <FlexLayout x:Name="EmojiContainer"
+                    Direction="Row"
+                    Wrap="Wrap"
+                    JustifyContent="Start"
+                    AlignItems="Start"/>
+    </ScrollView>
+
+<!-- 我的表情内容 -->
+<ScrollView x:Name="MyEmojiContent"
+            Grid.Row="1"
+            IsVisible="False"
+            Padding="12,8">
+
+    <FlexLayout x:Name="MyEmojiContainer"
+                Direction="Row"
+                Wrap="Wrap"
+                AlignItems="Start"
+                JustifyContent="Start">
+
+            <!-- 从相册添加表情 -->
+            <Border WidthRequest="72"
+                    HeightRequest="72"
+                    Margin="4"
+                    BackgroundColor="#EDF1F7"
+                    Stroke="#C9D4E2"
+                    StrokeThickness="1"
+                    StrokeShape="RoundRectangle 12">
+
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Tapped="AddMyEmoji_Tapped"/>
+                </Border.GestureRecognizers>
+
+                <Label Text="+"
+                       FontSize="36"
+                       TextColor="#8495A9"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       InputTransparent="True"/>
 
             </Border>
+
+        </FlexLayout>
+    </ScrollView>
+
+</Grid>
+
+
 
         </Grid>
 
